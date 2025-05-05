@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cab Booking App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://www.todofondos.net/wp-content/uploads/1280x804-Taxi-Cab-Wallpaper.-Photos-de-stock-de-taxis.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100%;
+      overflow-y: auto;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-area img {
+      width: 50px;
+    }
+
+    .logo-area span {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #28a745;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .main-image {
+      position: relative;
+      height: calc(100vh + 200px);
+      width: 100%;
+      background-image: url('https://www.todofondos.net/wp-content/uploads/1280x804-Taxi-Cab-Wallpaper.-Photos-de-stock-de-taxis.jpg');
+      background-size: cover;
+      background-position: center;
+      padding-bottom: 150px;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 20;
+    }
+
+    .overlay h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .overlay button {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .overlay button:hover {
+      background: #28a745;
+      color: white;
+    }
+
+    .section {
+      max-width: 800px;
+      margin: 100px auto 40px auto;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin-bottom: 50px;
+      color: black;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-green {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-red {
+      background: #dc3545;
+      color: white;
+    }
+
+    .hidden { display: none; }
+
+    .cab-list {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .cab-item {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      width: 180px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+
+    .cab-item:hover {
+      transform: scale(1.05);
+    }
+
+    .cab-item img {
+      width: 100%;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .cab-title {
+      margin-top: 10px;
+      font-family: 'Shadows Into Light', cursive;
+      font-size: 20px;
+    }
+
+    .confirmation, .cancel-page {
+      text-align: center;
+    }
+
+    .confirmation h2 {
+      color: green;
+    }
+
+    .cancel-page h2 {
+      color: red;
+    }
+
+    .cancel-page button {
+      width: auto;
+      margin-top: 20px;
+    }
+
+    #marquee {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      font-size: 18px;
+      text-align: center;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <img src="https://cdn-icons-png.flaticon.com/512/296/296216.png" alt="Cab Logo">
+    <span>CabSpot</span>
+  </div>
+  <nav>
+    <a onclick="showHome()">Home</a>
+    <a onclick="showLogin()">Login</a>
+    <a onclick="showAbout()">About Us</a>
+    <a onclick="showContact()">Contact Us</a>
+  </nav>
+</header>
+
+<div id="homePage" class="main-image">
+  <div class="overlay">
+    <h1>We Are Always There<br>at Your Service</h1>
+    <button onclick="showLogin()">Book Your Ride</button>
+    <span style="color:white; font-weight: bold;">Or</span>
+    <button onclick="showContact()">Get a Call Back</button>
+  </div>
+</div>
+
+<div id="loginPage" class="section hidden">
+  <h2>Login</h2>
+  <label>Username:</label>
+  <input type="text" id="username">
+  <label>Password:</label>
+  <input type="password" id="password">
+  <button class="btn-green" onclick="login()">Login</button>
+</div>
+
+<div id="bookingPage" class="section hidden">
+  <h2>Select a Cab</h2>
+  <div class="cab-list">
+    <div class="cab-item" onclick="selectCab('Mini', 15)">
+      <img src="https://s3.us-east-2.amazonaws.com/prod.mm.com/uploads/2019/07/16/1563295054_img_3137_mmthumb.jpg" alt="Mini">
+      <div class="cab-title">Mini (₹15/km)</div>
+    </div>
+    <div class="cab-item" onclick="selectCab('Sedan', 20)">
+      <img src="https://tse3.mm.bing.net/th?id=OIP.GNlucMRJMBpZciaVeqci_AHaE2&pid=Api&P=0&h=180" alt="Sedan">
+      <div class="cab-title">Sedan (₹20/km)</div>
+    </div>
+    <div class="cab-item" onclick="selectCab('SUV', 25)">
+      <img src="https://tse2.mm.bing.net/th?id=OIP.M-LffOmh2zAUHOAuq48mxQHaEK&pid=Api&P=0&h=180" alt="SUV">
+      <div class="cab-title">SUV (₹25/km)</div>
+    </div>
+	<div class="cab-item" onclick="selectCab('Luxury', 30)">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.AkyOEfNYH5if06MjPenYZQHaEK&pid=Api&P=0&h=180" alt="Luxury">
+        <div class="cab-title">Luxury (₹30/km)</div>
+      
+      </div>
+
+  </div>
+</div>
+
+<div id="formPage" class="section hidden">
+  <h3>Booking Details</h3>
+  <label>Cab Type:</label>
+  <input type="text" id="cabType" readonly>
+  <label>Name:</label>
+  <input type="text" id="name">
+  <label>Mobile Number:</label>
+  <input type="text" id="mobile">
+  <label>Email ID:</label>
+  <input type="email" id="email">
+  <label>Pickup Location:</label>
+  <input type="text" id="pickup">
+  <label>Drop Location:</label>
+  <input type="text" id="drop">
+  <label>Distance (in km):</label>
+  <input type="number" id="distance">
+  <label>Date:</label>
+  <input type="date" id="date">
+  <label>Time:</label>
+  <input type="time" id="time">
+  <button class="btn-green" onclick="confirmBooking()">Confirm Booking</button>
+</div>
+
+<div id="confirmationPage" class="section hidden confirmation">
+  <h2>Booking Confirmed!</h2>
+  <div id="confirmationDetails"></div>
+  <button class="btn-green" onclick="showHome()">Go to Home</button>
+  <button class="btn-red" onclick="cancelBooking()">Cancel Booking</button>
+</div>
+
+<div id="cancelPage" class="section hidden cancel-page">
+  <h2>Your previous booking has been cancelled.</h2>
+  <button class="btn-green" onclick="showBookingPage()">Select Another Cab</button>
+  <button class="btn-red" onclick="showHome()">Exit</button>
+</div>
+
+<div id="aboutPage" class="section hidden">
+  <h2>About Us</h2>
+  <p>Welcome to CabSpot — your reliable ride partner...</p>
+<p>We are available 24/7, have professional drivers, and ensure timely pickups and drop-offs. Whether you’re commuting within the city or planning an outstation trip, Cab.com is here to serve you.</p>
+    <p>Our fleet is well-maintained, GPS-enabled, and our support team is always ready to assist. Book your cab now and experience hassle-free travel with us.</p>
+
+</div>
+
+<div id="contactPage" class="section hidden">
+  <h2>Contact Us</h2>
+  <p>Email: support@cab.com</p>
+  <p>Phone: +91-9876543210</p>
+  <p>Address: 123 Cab Lane, Transport Nagar, City, Country</p>
+</div>
+
+<marquee id="marquee" behavior="scroll" direction="left" scrollamount="10">
+  Welcome to CabSpot! Book your ride now for a comfortable journey. Special discounts available for new users!
+</marquee>
+
+<script>
+  let selectedPrice = 0;
+
+  function hideAllPages() {
+    document.querySelectorAll('.main-image, .section').forEach(page => page.classList.add('hidden'));
+    document.getElementById("marquee").style.display = "none";
+  }
+
+  function showHome() {
+    hideAllPages();
+    document.getElementById("homePage").classList.remove("hidden");
+    document.getElementById("marquee").style.display = "block";
+  }
+
+  function showLogin() {
+    hideAllPages();
+    document.getElementById("loginPage").classList.remove("hidden");
+  }
+
+  function showAbout() {
+    hideAllPages();
+    document.getElementById("aboutPage").classList.remove("hidden");
+  }
+
+  function showContact() {
+    hideAllPages();
+    document.getElementById("contactPage").classList.remove("hidden");
+  }
+
+  function showBookingPage() {
+    hideAllPages();
+    document.getElementById("bookingPage").classList.remove("hidden");
+  }
+
+  function login() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    if (user === "khushi" && pass === "1234") {
+      showBookingPage();
+    } else {
+      alert("Invalid credentials");
+    }
+  }
+
+  function selectCab(type, price) {
+    document.getElementById("cabType").value = type;
+    selectedPrice = price;
+    hideAllPages();
+    document.getElementById("formPage").classList.remove("hidden");
+  }
+
+  function confirmBooking() {
+    const cab = document.getElementById("cabType").value;
+    const name = document.getElementById("name").value;
+    const mobile = document.getElementById("mobile").value;
+    const email = document.getElementById("email").value;
+    const pickup = document.getElementById("pickup").value;
+    const drop = document.getElementById("drop").value;
+    const distance = parseFloat(document.getElementById("distance").value);
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+
+    if (!name || !mobile || !email || !pickup || !drop || !distance || !date || !time) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    const total = selectedPrice * distance;
+    hideAllPages();
+    document.getElementById("confirmationPage").classList.remove("hidden");
+
+    document.getElementById("confirmationDetails").innerHTML = `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Mobile:</strong> ${mobile}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Cab:</strong> ${cab}</p>
+      <p><strong>Pickup:</strong> ${pickup}</p>
+      <p><strong>Drop:</strong> ${drop}</p>
+      <p><strong>Distance:</strong> ${distance} km</p>
+      <p><strong>Date:</strong> ${date}</p>
+      <p><strong>Time:</strong> ${time}</p>
+      <p><strong>Total Fare:</strong> ₹${total}</p>
+    `;
+  }
+
+  function cancelBooking() {
+    hideAllPages();
+    document.getElementById("cancelPage").classList.remove("hidden");
+  }
+
+  // Show home on page load
+  showHome();
+</script>
+
+</body>
+</html>
+
