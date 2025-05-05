@@ -11,3 +11,5 @@ https://github.com/khushi9686/Cab-Booking-Website/blob/4b129ceba7add6056fc5e8f00
 https://github.com/khushi9686/Cab-Booking-Website/blob/dd094e0d2c9fb88d9dc2b2c370e96648733d4386/output4.jpg
 
 https://github.com/khushi9686/Cab-Booking-Website/blob/ab99fb04c74c1d062d8fd80fb391238c6ff4f319/output5.jpg
+
+https://github.com/khushi9686/Cab-Booking-Website/blob/0f00a00457bfbeef0b5c8c52571e7eb4d4443b27/output6.jpg
